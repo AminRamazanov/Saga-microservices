@@ -1,0 +1,11 @@
+groups:
+  - name: saga-service-alerts
+    rules:
+      - alert: Http500ErrorsDetected
+        expr: sum(increase(http_server_requests_seconds_count{status="500"}[1m])) > 1
+        for: 30s
+        labels:
+          severity: critical
+        annotations:
+          summary: "HTTP 500 errors in saga-service"
+          description: "Detected HTTP 500 errors in saga-service in last 1 minute."

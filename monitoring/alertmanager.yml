@@ -1,0 +1,14 @@
+global:
+  smtp_smarthost: 'smtp.gmail.com:587'
+  smtp_from: 'aminramazanov96@gmail.com'
+  smtp_auth_username: 'aminramazanov96@gmail.com'
+  smtp_auth_password: 'qdsmhkkynnqocltc'
+
+route:
+  receiver: email-notifications
+
+receivers:
+  - name: email-notifications
+    email_configs:
+      - to: 'aminramazanov96@gmail.com'
+        send_resolved: true

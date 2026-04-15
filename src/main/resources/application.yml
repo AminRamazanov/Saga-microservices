@@ -1,0 +1,60 @@
+spring:
+  application:
+    name: saga-service
+
+
+  datasource:
+    url: "jdbc:postgresql://data_base:5432/postgres"
+    password: user123
+    username: user
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    open-in-view: false
+    properties:
+      hibernate:
+        format_sql: true
+
+resilience4j.circuitbreaker:
+  instances:
+    createOrder:
+      registerHealthIndicator: true
+      slidingWindowSize: 5
+      minimumNumberOfCalls: 5
+      failureRateThreshold: 50
+      waitDurationInOpenState: 10s
+      permittedNumberOfCallsInHalfOpenState: 2
+      automatic-transition-from-open-to-half-open-enabled: true
+
+management:
+  health:
+    liveness state:
+      enabled: true
+    readiness state:
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: health,info,prometheus
+  endpoint:
+    health:
+      show-details: always
+  prometheus:
+    metrics:
+      export:
+        enabled: true
+
+
+
+
+
+#resilience4j.retry:
+#  instances:
+#    createOrderRetry:
+#      maxAttempts: 3
+#      waitDuration: 3s
+
+
+server:
+  port: 8082
